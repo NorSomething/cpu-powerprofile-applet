@@ -10,10 +10,20 @@ Installs a small Wofi menu in Waybar for three RyzenAdj power limit presets:
 
 ## Requirements
 
-- Void Linux (the installer uses `xbps-install`) with Sway/Waybar.
+- Void Linux, Debian-based Linux, or Arch-based Linux with Sway/Waybar.
 - `ryzenadj` installed at `/usr/local/bin/ryzenadj`.
 - `wofi`, `libnotify` (`notify-send`), `pkill`, and `sudo`.
 - A Ryzen laptop supported by RyzenAdj. These limits are ceilings and firmware may overwrite them, including when changing Lenovo Fn+Q modes.
+
+The installer checks for the helper dependencies and asks before installing any that are missing. If you decline, it exits so you can install them manually. The matching package names are:
+
+| Distro family | Packages |
+| --- | --- |
+| Void | `jq wofi libnotify sudo waybar` (`sudo xbps-install -S ...`) |
+| Debian/Ubuntu | `jq wofi libnotify-bin sudo waybar` (`sudo apt install ...`) |
+| Arch | `jq wofi libnotify sudo waybar` (`sudo pacman -S ...`) |
+
+`ryzenadj` is not consistently packaged across these distributions; install or build it separately and make sure it is available at `/usr/local/bin/ryzenadj` (or provide `RYZENADJ=/path/to/ryzenadj` when running `setup-ryzenadj.sh`).
 
 ## Install
 

@@ -8,11 +8,11 @@ bin_dir=${XDG_BIN_HOME:-"$HOME/.local/bin"}
 menu="$bin_dir/cpu-power-profile-menu"
 
 if ! command -v jq >/dev/null 2>&1; then
-  printf 'jq is required to safely merge Waybar configuration. Install jq and rerun.\n' >&2
+  printf 'jq is required to safely merge Waybar configuration. Install it with your package manager and rerun.\n' >&2
   exit 1
 fi
 if ! command -v wofi >/dev/null 2>&1 || ! command -v notify-send >/dev/null 2>&1; then
-  printf 'Install wofi and libnotify (notify-send), then rerun.\n' >&2
+  printf 'Install wofi and libnotify (notify-send) with your package manager, then rerun.\n' >&2
   exit 1
 fi
 if [ ! -f "$config" ]; then
