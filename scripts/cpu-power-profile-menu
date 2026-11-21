@@ -24,7 +24,7 @@ status=$?
 if [ "$status" -eq 0 ]; then
   printf '%s\n' "$choice" > "$state_file"
   pkill -RTMIN+8 waybar 2>/dev/null || true
-  notify-send 'CPU-Power-Profile' "$choice enabled"
+  notify-send -t 2000 'CPU-Power-Profile' "$choice enabled"
 else
-  notify-send -u critical 'CPU-Power-Profile' "${error:-Could not apply selected mode.}"
+  notify-send -t 2000 -u normal 'CPU-Power-Profile' "${error:-Could not apply selected mode.}"
 fi
