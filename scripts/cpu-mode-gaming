@@ -1,0 +1,2 @@
+#!/bin/sh
+exec /usr/local/bin/ryzenadj --stapm-limit=20000 --fast-limit=20000 --slow-limit=20000

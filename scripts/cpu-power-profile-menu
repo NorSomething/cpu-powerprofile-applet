@@ -1,0 +1,30 @@
+#!/bin/sh
+
+state_file="${XDG_RUNTIME_DIR:-/tmp}/cpu-power-profile"
+
+if [ "${1:-}" = '--status' ]; then
+  if [ -r "$state_file" ]; then
+    cat "$state_file"
+  else
+    printf '%s\n' 'CPU-Power-Profile'
+  fi
+  exit 0
+fi
+
+choice=$(printf '%s\n' 'Saving - 7 W' 'Gaming - 20 W' 'Normal - 40 W' | wofi --dmenu --prompt 'CPU-Power-Profile')
+case "$choice" in
+  'Saving - 7 W') script=/usr/local/sbin/cpu-mode-saving ;;
+  'Gaming - 20 W') script=/usr/local/sbin/cpu-mode-gaming ;;
+  'Normal - 40 W') script=/usr/local/sbin/cpu-mode-normal ;;
+  *) exit 0 ;;
+esac
+
+error=$(sudo -n "$script" 2>&1)
+status=$?
+if [ "$status" -eq 0 ]; then
+  printf '%s\n' "$choice" > "$state_file"
+  pkill -RTMIN+8 waybar 2>/dev/null || true
+  notify-send 'CPU-Power-Profile' "$choice enabled"
+else
+  notify-send -u critical 'CPU-Power-Profile' "${error:-Could not apply selected mode.}"
+fi
